@@ -1,0 +1,44 @@
+{
+	"name": "Existing Dockerfile",
+
+	"context": "..",
+
+	//"dockerFile": "../Dockerfile",
+    "image": "blgnksy/lip_sync:0.1",
+
+	"runArgs": [
+		"-v", "/home/blgnksy/.ssh:/root/.ssh-localhost:ro", //remote volume bindings
+		//"-p", "2626:2626",
+		
+		
+		//for GUI
+		//"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		//"-e", "DISPLAY=${env:DISPLAY}",
+		"--ipc", "host",
+	],
+
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.pythonPath": "python",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintPath": "pylint",
+		"python.linting.pylintArgs": ["--errors-only","--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"],
+		"python.testing.unittestEnabled": true,
+		"python.testing.nosetestsEnabled": true,
+		//"python.jediEnabled": true,
+		"files.watcherExclude": {
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/data/*/**": true,
+			"**/output/*/**": true,
+		}
+	},
+
+	"postCreateCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*",
+
+	"extensions": ["ms-python.python", "eamodio.gitlens", "ms-python.vscode-pylance", "njpwerner.autodocstring"],
+	
+	"workspaceMount": "src=/home/blgnksy/Desktop/mntt,dst=/workspace,type=bind", //remote code volume bindings
+	"workspaceFolder": "/workspace"
+}
